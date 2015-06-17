@@ -3,17 +3,19 @@ import java.util.Random;
 
 public class Cell implements MainInterface
 {
-  public int xCord;
-  public int yCord;
-  public int xVel;
-  public int yVel;
-  public int xA;
-  public int yA;
-  public int mass;
-  public ArrayList<Cell> subCells = new ArrayList<Cell>();
-  public boolean div;
-  public String type;
-  public ArrayList<Cell> sense;
+  
+
+private int xCoord;
+  private int yCoord;
+  private int xVel;
+  private int yVel;
+  private int xA;
+  private int yA;
+  private int mass;
+  private ArrayList<Cell> subCells = new ArrayList<Cell>();
+  private boolean div;
+  private String type;
+  private ArrayList<Cell> sense;
 
   // Constructors
   public Cell()
@@ -23,16 +25,16 @@ public class Cell implements MainInterface
     xA = 0;
     yA = 0;
     mass = 10;
-    xCord = 0;
-    yCord = 0;
+    xCoord = 0;
+    yCoord = 0;
     type = "Food";
   }
 
   public Cell(int xC, int yC, int xV, int yV, int xAc, int yAc, int ma,
       String a, ArrayList<Cell> b)
   {
-    xCord = xC;
-    yCord = yC;
+    xCoord = xC;
+    yCoord = yC;
     xVel = xV;
     yVel = yV;
     xA = xAc;
@@ -51,9 +53,9 @@ public class Cell implements MainInterface
     mass = 10;
     type = a;
     Random gen = new Random(width);
-    xCord = gen.nextInt();
+    xCoord = gen.nextInt();
     gen = new Random(height);
-    yCord = gen.nextInt();
+    yCoord = gen.nextInt();
 
   }
 
@@ -63,16 +65,16 @@ public class Cell implements MainInterface
   {
     xVel += xA;
     yVel += yA;
-    xCord += xVel;
-    yCord += yVel;
+    xCoord += xVel;
+    yCoord += yVel;
     if (div)
     {
       for (Cell a : subCells)
       {
         a.xVel = this.xVel;
         a.yVel = this.yVel;
-        a.xCord += a.xVel;
-        a.yCord += a.yVel;
+        a.xCoord += a.xVel;
+        a.yCoord += a.yVel;
       }
     }
   }
@@ -148,5 +150,95 @@ public class Cell implements MainInterface
   {
 
   }
+
+
+
+public int getxCoord() {
+	return xCoord;
+}
+
+public void setxCoord(int xCord) {
+	this.xCoord = xCord;
+}
+
+public int getyCoord() {
+	return yCoord;
+}
+
+public void setyCoord(int yCord) {
+	this.yCoord = yCord;
+}
+
+public int getxVel() {
+	return xVel;
+}
+
+public void setxVel(int xVel) {
+	this.xVel = xVel;
+}
+
+public int getyVel() {
+	return yVel;
+}
+
+public void setyVel(int yVel) {
+	this.yVel = yVel;
+}
+
+public int getxA() {
+	return xA;
+}
+
+public void setxA(int xA) {
+	this.xA = xA;
+}
+
+public int getyA() {
+	return yA;
+}
+
+public void setyA(int yA) {
+	this.yA = yA;
+}
+
+public int getMass() {
+	return mass;
+}
+
+public void setMass(int mass) {
+	this.mass = mass;
+}
+
+public ArrayList<Cell> getSubCells() {
+	return subCells;
+}
+
+public void setSubCells(ArrayList<Cell> subCells) {
+	this.subCells = subCells;
+}
+
+public boolean isDiv() {
+	return div;
+}
+
+public void setDiv(boolean div) {
+	this.div = div;
+}
+
+public String getType() {
+	return type;
+}
+
+public void setType(String type) {
+	this.type = type;
+}
+
+public ArrayList<Cell> getSense() {
+	return sense;
+}
+
+public void setSense(ArrayList<Cell> sense) {
+	this.sense = sense;
+}
 
 }

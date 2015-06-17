@@ -10,8 +10,8 @@ public class Dish
 
     ArrayList<Cell> cells = new ArrayList<Cell>();
     cells.add(new jackCellv1());
-    cells.get(0).xVel = 1;
-    cells.get(0).type = "Cell";
+    cells.get(0).setxVel(1);
+    cells.get(0).setType("Cell");
     
     while (true)
     {
@@ -25,10 +25,10 @@ public class Dish
     {
       // trace("Loop");
 
-      if (cells.get(i).type.equals("Cell"))
+      if (cells.get(i).getType().equals("Cell"))
       {
         cells.get(i).main();
-        trace(cells.get(i).div);
+        trace(cells.get(i).isDiv());
       }
       wallDetect(cells.get(i), width, height);
       cells = hitDetect(cells);
@@ -44,15 +44,15 @@ public class Dish
 
       for (int i = 0; i < cells.size(); i++)
       {
-        if (cells.get(i).type.equals("Cell"))
+        if (cells.get(i).getType().equals("Cell"))
         {
           for (int j = i + 1; j < cells.size(); j++)
           {
-            int xDis = cells.get(i).xCord - cells.get(j).xCord;
-            int yDis = cells.get(i).yCord - cells.get(j).yCord;
+            int xDis = cells.get(i).getxCoord() - cells.get(j).getxCoord();
+            int yDis = cells.get(i).getyCoord() - cells.get(j).getyCoord();
             double distance = Math.abs((xDis ^ 2 + yDis ^ 2) ^ (1 / 2));
            
-            if (distance < cells.get(i).mass / 2 + cells.get(j).mass / 2)
+            if (distance < cells.get(i).getMass() / 2 + cells.get(j).getMass() / 2)
             {
              
               cells = eat(cells, i, j);
@@ -68,12 +68,12 @@ public class Dish
   public static ArrayList<Cell> eat(ArrayList<Cell> cells, int i, int j)
   {
 
-    if (cells.get(i).mass / cells.get(j).mass > 2)
+    if (cells.get(i).getMass() / cells.get(j).getMass() > 2)
     {
       cells.get(i).eat(cells.get(j));
       cells.remove(j);
     }
-    else if (cells.get(j).mass / cells.get(i).mass > 2)
+    else if (cells.get(j).getMass() / cells.get(i).getMass() > 2)
     {
       cells.get(j).eat(cells.get(i));
       cells.remove(i);
@@ -84,31 +84,31 @@ public class Dish
 
   public static void wallDetect(Cell cCell, int width, int height)
   {
-    if (cCell.type.equals("Cell"))
+    if (cCell.getType().equals("Cell"))
     {
-      if (cCell.xCord + cCell.mass / 2 > width)
+      if (cCell.getxCoord() + cCell.getMass() / 2 > width)
       {
-        cCell.xCord = width - cCell.mass / 2;
-        cCell.xVel = 0;
-        cCell.xA = 0;
+        cCell.setxCoord(width - cCell.getMass() / 2);
+        cCell.setxVel(0);
+        cCell.setxA(0);
       }
-      if (cCell.yCord + cCell.mass / 2 > height)
+      if (cCell.getyCoord() + cCell.getMass() / 2 > height)
       {
-        cCell.yCord = height - cCell.mass / 2;
-        cCell.yVel = 0;
-        cCell.yA = 0;
+        cCell.setyCoord(height - cCell.getMass() / 2);
+        cCell.setyVel(0);
+        cCell.setyA(0);
       }
-      if (cCell.xCord + cCell.mass / 2 < 0)
+      if (cCell.getxCoord() + cCell.getMass() / 2 < 0)
       {
-        cCell.xCord = 0 + cCell.mass / 2;
-        cCell.xVel = 0;
-        cCell.xA = 0;
+        cCell.setxCoord(0 + cCell.getMass() / 2);
+        cCell.setxVel(0); 
+        cCell.setxA(0);
       }
-      if (cCell.yCord + cCell.mass / 2 < 0)
+      if (cCell.getyCoord() + cCell.getMass() / 2 < 0)
       {
-        cCell.yCord = 0 + cCell.mass / 2;
-        cCell.yVel = 0;
-        cCell.yA = 0;
+        cCell.setyCoord(0 + cCell.getMass() / 2);
+        cCell.setyVel(0);
+        cCell.setyA(0);
       }
     }
   }

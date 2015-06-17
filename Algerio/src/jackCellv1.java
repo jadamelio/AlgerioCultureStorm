@@ -4,7 +4,7 @@ public class jackCellv1 extends Cell  implements MainInterface
 
   public void main(){
     update();
-    mass += 5;
+    setMass(getMass() + 5);
     divide();
   }
 
