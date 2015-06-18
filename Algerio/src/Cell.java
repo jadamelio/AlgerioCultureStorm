@@ -10,7 +10,6 @@ public class Cell {
 	private int xA;
 	private int yA;
 	private int mass;
-	private ArrayList<Player> sense;
 
 	// Constructors
 	public Cell() {
@@ -23,8 +22,7 @@ public class Cell {
 		yCoord = 0;
 	}
 
-	public Cell(int xC, int yC, int xV, int yV, int xAc, int yAc, int ma,
-			ArrayList<Player> b) {
+	public Cell(int xC, int yC, int xV, int yV, int xAc, int yAc, int ma) {
 		xCoord = xC;
 		yCoord = yC;
 		xVel = xV;
@@ -32,7 +30,7 @@ public class Cell {
 		xA = xAc;
 		yA = yAc;
 		mass = ma;
-		sense = b;
+	
 	}
 
 	public Cell(int width, int height) {
@@ -116,14 +114,6 @@ public class Cell {
 
 	public void setMass(int mass) {
 		this.mass = mass;
-	}
-
-	public ArrayList<Player> getSense() {
-		return sense;
-	}
-
-	public void setSense(ArrayList<Player> sense) {
-		this.sense = sense;
 	}
 
 }

@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 
-public class Player implements MainInterface {
+public class Pointer implements MainInterface {
 
 	private int xCoord;
+
 	private int yCoord;
 	private int xVel;
 	private int yVel;
@@ -12,17 +13,65 @@ public class Player implements MainInterface {
 	private boolean div;
 	private String type;
 	private ArrayList<Cell> sense;
+	private ArrayList<Cell> subCells;
+
+	public Pointer(int xCoord, int yCoord, int xVel, int yVel, int xA, int yA,
+			int mass, boolean div, String type, ArrayList<Cell> sense,
+			ArrayList<Cell> subCells) {
+		super();
+		this.xCoord = xCoord;
+		this.yCoord = yCoord;
+		this.xVel = xVel;
+		this.yVel = yVel;
+		this.xA = xA;
+		this.yA = yA;
+		this.mass = mass;
+		this.div = div;
+		this.type = type;
+		this.sense = sense;
+		this.subCells = subCells;
+	}
 
 	@Override
 	public void main() {
-		// TODO Auto-generated method stub
+		update();
 
+	}
+
+	public void update() {
+		for (Cell cell : subCells) {
+			cell.setxVel(xVel);
+			cell.setyVel(yVel);
+			cell.setxA(cell.getxA() + xA);
+			cell.setyA(cell.getyA() + yA);
+			cell.update();
+
+		}
 	}
 
 	public void divide() {
-
+		ArrayList<Cell> temp = new ArrayList<Cell>();
+		for (Cell cell : subCells) {
+			if (cell.getMass() > 59) {
+				temp.add(new Cell(cell.getxCoord() + cell.getMass(), cell
+						.getyCoord() + cell.getMass(), cell.getxVel(), cell
+						.getyVel(), cell.getyA(), cell.getxA(),
+						cell.getMass() / 2));
+				cell.setMass(cell.getMass() / 2);
+			}
+		}
+		for (Cell cell : temp) {
+			subCells.add(cell);
+		}
 	}
 
+	public int removeCell(Cell cell) {
+		mass = cell.getMass();
+		subCells.remove(cell);
+		return mass;
+	}
+
+	// Not sure about this
 	private void cDxV(Cell cell, int value) {
 		cell.setxVel(value);
 	}
@@ -30,17 +79,15 @@ public class Player implements MainInterface {
 	private void cDyV(Cell cell, int value) {
 		cell.setyVel(value);
 	}
+
 	private void cDyAc(Cell cell, int value) {
 		cell.setyA(value);
 	}
-	
+
 	private void cDxAc(Cell cell, int value) {
 		cell.setxA(value);
 	}
-	private void cDsense(Cell cell, ArrayList<Player> players) {
-		cell.setSense(players);
-	}
-	
+
 	private void cDxCoord(Cell cell, int value) {
 		cell.setxCoord(value);
 	}
@@ -48,9 +95,6 @@ public class Player implements MainInterface {
 	private void cDyCoord(Cell cell, int value) {
 		cell.setyCoord(value);
 	}
-	
-	
-
 
 	public int getxCoord() {
 		return xCoord;
@@ -130,6 +174,14 @@ public class Player implements MainInterface {
 
 	public void setSense(ArrayList<Cell> sense) {
 		this.sense = sense;
+	}
+
+	public ArrayList<Cell> getSubCells() {
+		return subCells;
+	}
+
+	public void setSubCells(ArrayList<Cell> subCells) {
+		this.subCells = subCells;
 	}
 
 }
