@@ -2,21 +2,22 @@ import java.util.ArrayList;
 
 public class Pointer implements MainInterface {
 
-	private int xCoord;
+	private double xCoord;
 
-	private int yCoord;
-	private int xVel;
-	private int yVel;
-	private int xA;
-	private int yA;
-	private int mass;
+	private double yCoord;
+	private double xVel;
+	private double yVel;
+	private double xA;
+	private double yA;
+	private double mass;
 	private boolean div;
 	private String type;
 	private ArrayList<Cell> sense;
 	private ArrayList<Cell> subCells;
+	private double maxSpeed;
 
-	public Pointer(int xCoord, int yCoord, int xVel, int yVel, int xA, int yA,
-			int mass, boolean div, String type, ArrayList<Cell> sense,
+	public Pointer(double xCoord, double yCoord, double xVel, double yVel, double xA, double yA,
+			double mass, boolean div, String type, ArrayList<Cell> sense,
 			ArrayList<Cell> subCells) {
 		super();
 		this.xCoord = xCoord;
@@ -65,90 +66,111 @@ public class Pointer implements MainInterface {
 		}
 	}
 
-	public int removeCell(Cell cell) {
+	public void internalContinuity(){
+		//Make sure the cells bounce of each other and don't each other
+	}
+	public double removeCell(Cell cell) {
 		mass = cell.getMass();
 		subCells.remove(cell);
 		return mass;
 	}
+	
+	public double move(double x, double y){
+		double xVec = this.xCoord - x;
+		double yVec = this.yCoord - y;
+		double ratio = xVec / yVec;
+		for(double i = maxSpeed; i >= 0; i -= .1){
+			for(double j = maxSpeed; j >= 0; j -= .1){
+				if(j/i < ratio + .2 && j/i > ratio - .2 && (Math.sqrt(j*j)+(i*i)) <= maxSpeed){
+					this.setyVel(i);
+					this.setxVel(j);
+					return j/i;
+				}
+			}
+		}
+		
+		return -1;
+		
+	}
 
 	// Not sure about this
-	private void cDxV(Cell cell, int value) {
+	private void cDxV(Cell cell, double value) {
 		cell.setxVel(value);
 	}
 
-	private void cDyV(Cell cell, int value) {
+	private void cDyV(Cell cell, double value) {
 		cell.setyVel(value);
 	}
 
-	private void cDyAc(Cell cell, int value) {
+	private void cDyAc(Cell cell, double value) {
 		cell.setyA(value);
 	}
 
-	private void cDxAc(Cell cell, int value) {
+	private void cDxAc(Cell cell, double value) {
 		cell.setxA(value);
 	}
 
-	private void cDxCoord(Cell cell, int value) {
+	private void cDxCoord(Cell cell, double value) {
 		cell.setxCoord(value);
 	}
 
-	private void cDyCoord(Cell cell, int value) {
+	private void cDyCoord(Cell cell, double value) {
 		cell.setyCoord(value);
 	}
 
-	public int getxCoord() {
+	public double getxCoord() {
 		return xCoord;
 	}
 
-	public void setxCoord(int xCoord) {
+	public void setxCoord(double xCoord) {
 		this.xCoord = xCoord;
 	}
 
-	public int getyCoord() {
+	public double getyCoord() {
 		return yCoord;
 	}
 
-	public void setyCoord(int yCoord) {
+	public void setyCoord(double yCoord) {
 		this.yCoord = yCoord;
 	}
 
-	public int getxVel() {
+	public double getxVel() {
 		return xVel;
 	}
 
-	public void setxVel(int xVel) {
+	public void setxVel(double xVel) {
 		this.xVel = xVel;
 	}
 
-	public int getyVel() {
+	public double getyVel() {
 		return yVel;
 	}
 
-	public void setyVel(int yVel) {
+	public void setyVel(double yVel) {
 		this.yVel = yVel;
 	}
 
-	public int getxA() {
+	public double getxA() {
 		return xA;
 	}
 
-	public void setxA(int xA) {
+	public void setxA(double xA) {
 		this.xA = xA;
 	}
 
-	public int getyA() {
+	public double getyA() {
 		return yA;
 	}
 
-	public void setyA(int yA) {
+	public void setyA(double yA) {
 		this.yA = yA;
 	}
 
-	public int getMass() {
+	public double getMass() {
 		return mass;
 	}
 
-	public void setMass(int mass) {
+	public void setMass(double mass) {
 		this.mass = mass;
 	}
 

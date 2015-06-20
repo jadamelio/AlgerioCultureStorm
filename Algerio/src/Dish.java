@@ -42,13 +42,14 @@ public class Dish {
 				for (int j = i + 1; j < pointer.size(); j++) {
 					for (Cell cellI : pointer.get(i).getSubCells()) {
 						for (Cell cellJ : pointer.get(j).getSubCells()) {
-							int xDis = cellI.getxCoord() - cellJ.getxCoord();
-							int yDis = cellI.getyCoord() - cellJ.getyCoord();
-							double distance = Math.abs((xDis ^ 2 + yDis ^ 2)
-									^ (1 / 2));
+							double xDis = cellI.getxCoord() - cellJ.getxCoord();
+							double yDis = cellI.getyCoord() - cellJ.getyCoord();
+							double distance = Math.abs(Math.sqrt(xDis * xDis + yDis
+									* yDis));
 							if (distance < cellI.getMass() / 2
 									+ cellJ.getMass() / 2) {
-								eat(cellI, cellJ, pointer.get(i), pointer.get(j));
+								eat(cellI, cellJ, pointer.get(i),
+										pointer.get(j));
 							}
 
 						}
@@ -71,7 +72,6 @@ public class Dish {
 			I.removeCell(i);
 		}
 
-	
 	}
 
 	public static void wallDetect(Cell cCell, int width, int height) {

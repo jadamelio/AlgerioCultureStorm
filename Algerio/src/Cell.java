@@ -3,13 +3,16 @@ import java.util.Random;
 
 public class Cell {
 
-	private int xCoord;
-	private int yCoord;
-	private int xVel;
-	private int yVel;
-	private int xA;
-	private int yA;
-	private int mass;
+	private double xCoord;
+	private double yCoord;
+	private double xVel;
+	private double yVel;
+	private double xA;
+	private double yA;
+	private double mass;
+	private double maxSpeed;
+
+	
 
 	// Constructors
 	public Cell() {
@@ -22,7 +25,7 @@ public class Cell {
 		yCoord = 0;
 	}
 
-	public Cell(int xC, int yC, int xV, int yV, int xAc, int yAc, int ma) {
+	public Cell(double xC, double yC, double xV, double yV, double xAc, double yAc, double ma) {
 		xCoord = xC;
 		yCoord = yC;
 		xVel = xV;
@@ -33,15 +36,15 @@ public class Cell {
 	
 	}
 
-	public Cell(int width, int height) {
+	public Cell(double width, double height) {
 		xVel = 0;
 		yVel = 0;
 		xA = 0;
 		yA = 0;
 		mass = 10;
-		Random gen = new Random(width);
+		Random gen = new Random((int)width);
 		xCoord = gen.nextInt();
-		gen = new Random(height);
+		gen = new Random((int)height);
 		yCoord = gen.nextInt();
 
 	}
@@ -55,65 +58,90 @@ public class Cell {
 		yCoord += yVel;
 
 	}
+	
+	public double move(double x, double y){
+		double xVec = this.xCoord - x;
+		double yVec = this.yCoord - y;
+		double ratio = xVec / yVec;
+		for(double i = maxSpeed; i >= 0; i -= .1){
+			for(double j = maxSpeed; j >= 0; j -= .1){
+				if(j/i < ratio + .2 && j/i > ratio - .2 && (Math.sqrt(j*j)+(i*i)) <= maxSpeed){
+					this.setyVel(i);
+					this.setxVel(j);
+					return j/i;
+				}
+			}
+		}
+		
+		return -1;
+		
+	}
 
 	public void eat(Cell cell) {
 
 	}
 
-	public int getxCoord() {
+	public double getxCoord() {
 		return xCoord;
 	}
 
-	public void setxCoord(int xCord) {
+	public void setxCoord(double xCord) {
 		this.xCoord = xCord;
 	}
 
-	public int getyCoord() {
+	public double getyCoord() {
 		return yCoord;
 	}
 
-	public void setyCoord(int yCord) {
+	public void setyCoord(double yCord) {
 		this.yCoord = yCord;
 	}
 
-	public int getxVel() {
+	public double getxVel() {
 		return xVel;
 	}
 
-	public void setxVel(int xVel) {
+	public void setxVel(double xVel) {
 		this.xVel = xVel;
 	}
 
-	public int getyVel() {
+	public double getyVel() {
 		return yVel;
 	}
 
-	public void setyVel(int yVel) {
+	public void setyVel(double yVel) {
 		this.yVel = yVel;
 	}
 
-	public int getxA() {
+	public double getxA() {
 		return xA;
 	}
 
-	public void setxA(int xA) {
+	public void setxA(double xA) {
 		this.xA = xA;
 	}
 
-	public int getyA() {
+	public double getyA() {
 		return yA;
 	}
 
-	public void setyA(int yA) {
+	public void setyA(double yA) {
 		this.yA = yA;
 	}
 
-	public int getMass() {
+	public double getMass() {
 		return mass;
 	}
 
-	public void setMass(int mass) {
+	public void setMass(double mass) {
 		this.mass = mass;
+	}
+	public double getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public void setMaxSpeed(double maxSpeed) {
+		this.maxSpeed = maxSpeed;
 	}
 
 }
