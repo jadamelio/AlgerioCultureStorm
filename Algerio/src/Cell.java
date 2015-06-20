@@ -62,10 +62,10 @@ public class Cell {
 	public double move(double x, double y){
 		double xVec = this.xCoord - x;
 		double yVec = this.yCoord - y;
-		double ratio = xVec / yVec;
+		double ratio = yVec / xVec;
 		for(double i = maxSpeed; i >= 0; i -= .1){
 			for(double j = maxSpeed; j >= 0; j -= .1){
-				if(j/i < ratio + .2 && j/i > ratio - .2 && (Math.sqrt(j*j)+(i*i)) <= maxSpeed){
+				if(j/i < ratio + .2 && j/i > ratio - .2 && Math.sqrt((j*j)+(i*i)) <= maxSpeed){
 					this.setyVel(i);
 					this.setxVel(j);
 					return j/i;

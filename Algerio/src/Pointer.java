@@ -16,9 +16,9 @@ public class Pointer implements MainInterface {
 	private ArrayList<Cell> subCells;
 	private double maxSpeed;
 
-	public Pointer(double xCoord, double yCoord, double xVel, double yVel, double xA, double yA,
-			double mass, boolean div, String type, ArrayList<Cell> sense,
-			ArrayList<Cell> subCells) {
+	public Pointer(double xCoord, double yCoord, double xVel, double yVel,
+			double xA, double yA, double mass, boolean div, String type,
+			ArrayList<Cell> sense, ArrayList<Cell> subCells) {
 		super();
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
@@ -66,31 +66,33 @@ public class Pointer implements MainInterface {
 		}
 	}
 
-	public void internalContinuity(){
-		//Make sure the cells bounce of each other and don't each other
+	public void internalContinuity() {
+		// Make sure the cells bounce of each other and don't each other
 	}
+
 	public double removeCell(Cell cell) {
 		mass = cell.getMass();
 		subCells.remove(cell);
 		return mass;
 	}
-	
-	public double move(double x, double y){
+
+	public double move(double x, double y) {
 		double xVec = this.xCoord - x;
 		double yVec = this.yCoord - y;
-		double ratio = xVec / yVec;
-		for(double i = maxSpeed; i >= 0; i -= .1){
-			for(double j = maxSpeed; j >= 0; j -= .1){
-				if(j/i < ratio + .2 && j/i > ratio - .2 && (Math.sqrt(j*j)+(i*i)) <= maxSpeed){
+		double ratio = yVec / xVec;
+		for (double i = maxSpeed; i >= 0; i -= .1) {
+			for (double j = maxSpeed; j >= 0; j -= .1) {
+				if (j / i < ratio + .2 && j / i > ratio - .2
+						&& Math.sqrt((j * j) + (i * i)) <= maxSpeed) {
 					this.setyVel(i);
 					this.setxVel(j);
-					return j/i;
+					return j / i;
 				}
 			}
 		}
-		
+
 		return -1;
-		
+
 	}
 
 	// Not sure about this
