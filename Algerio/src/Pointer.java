@@ -2,8 +2,9 @@ import java.util.ArrayList;
 
 public class Pointer implements MainInterface {
 
+	
+	//Properties
 	private double xCoord;
-
 	private double yCoord;
 	private double xVel;
 	private double yVel;
@@ -15,7 +16,7 @@ public class Pointer implements MainInterface {
 	private ArrayList<Cell> sense;
 	private ArrayList<Cell> subCells;
 	private double maxSpeed;
-
+//Constructors
 	public Pointer(double xCoord, double yCoord, double xVel, double yVel,
 			double xA, double yA, double mass, boolean div, String type,
 			ArrayList<Cell> sense, ArrayList<Cell> subCells) {
@@ -33,6 +34,8 @@ public class Pointer implements MainInterface {
 		this.subCells = subCells;
 	}
 
+	
+	//Main method, governs actual change of position.
 	@Override
 	public void main() {
 		update();
@@ -40,16 +43,21 @@ public class Pointer implements MainInterface {
 	}
 
 	public void update() {
+		
 		for (Cell cell : subCells) {
 			cell.setxVel(xVel);
 			cell.setyVel(yVel);
 			cell.setxA(cell.getxA() + xA);
 			cell.setyA(cell.getyA() + yA);
+			cell.move(this.xCoord, this.yCoord, .1);
 			cell.update();
 
 		}
+		xVel += xA;
+		yVel += yA;
+		this.move(xCoord + xVel, yCoord + yVel);
 	}
-
+//Divides every eligible cell in the pointer
 	public void divide() {
 		ArrayList<Cell> temp = new ArrayList<Cell>();
 		for (Cell cell : subCells) {
@@ -68,14 +76,40 @@ public class Pointer implements MainInterface {
 
 	public void internalContinuity() {
 		// Make sure the cells bounce of each other and don't each other
+		//This doesn't work, like at all
+		for (int i = 0; i < subCells.size(); i++) {
+			for (int j = i + 1; j < subCells.size(); j++) {
+				if (collisionDetect(subCells.get(i), subCells.get(j))) {
+					collide(subCells.get(i), subCells.get(j));
+				}
+			}
+		}
 	}
+//Checks to see if two cells are bumping with circle detection
+	public boolean collisionDetect(Cell a, Cell b) {
+		double xDis = a.getxCoord() - b.getxCoord();
+		double yDis = a.getyCoord() - b.getyCoord();
+		double distance = Math.abs(Math.sqrt(xDis * xDis + yDis * yDis));
 
+		if (distance < a.getMass() / 2 + b.getMass() / 2) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+//IDK, i'll figure it out
+	public void collide(Cell a, Cell b) {
+		double momentum = a.getMomentum() + b.getMomentum();
+		// uuuh
+	}
+//Removes a cell from the array, returning its mass as a double
 	public double removeCell(Cell cell) {
 		mass = cell.getMass();
 		subCells.remove(cell);
 		return mass;
 	}
-
+//Sets pointers x and y vectors to a coordinate point
 	public double move(double x, double y) {
 		double xVec = this.xCoord - x;
 		double yVec = this.yCoord - y;
@@ -84,8 +118,8 @@ public class Pointer implements MainInterface {
 			for (double j = maxSpeed; j >= 0; j -= .1) {
 				if (j / i < ratio + .2 && j / i > ratio - .2
 						&& Math.sqrt((j * j) + (i * i)) <= maxSpeed) {
-					this.setyVel(i);
-					this.setxVel(j);
+					yVel = i;
+					xVel = j;
 					return j / i;
 				}
 			}
@@ -95,7 +129,7 @@ public class Pointer implements MainInterface {
 
 	}
 
-	// Not sure about this
+	// Not sure about this, two granular?
 	private void cDxV(Cell cell, double value) {
 		cell.setxVel(value);
 	}
@@ -120,6 +154,8 @@ public class Pointer implements MainInterface {
 		cell.setyCoord(value);
 	}
 
+	
+	//Setters and getter
 	public double getxCoord() {
 		return xCoord;
 	}

@@ -3,6 +3,8 @@ import java.util.Random;
 
 public class Cell {
 
+	
+	//Properties
 	private double xCoord;
 	private double yCoord;
 	private double xVel;
@@ -50,7 +52,7 @@ public class Cell {
 	}
 
 	// Methods
-
+//Moves the Cell
 	public void update() {
 		xVel += xA;
 		yVel += yA;
@@ -58,14 +60,14 @@ public class Cell {
 		yCoord += yVel;
 
 	}
-	
-	public double move(double x, double y){
+	//Sets vectors to a coordinate, not exceeding max speed
+	public double move(double x, double y, double speed){
 		double xVec = this.xCoord - x;
 		double yVec = this.yCoord - y;
 		double ratio = yVec / xVec;
-		for(double i = maxSpeed; i >= 0; i -= .1){
-			for(double j = maxSpeed; j >= 0; j -= .1){
-				if(j/i < ratio + .2 && j/i > ratio - .2 && Math.sqrt((j*j)+(i*i)) <= maxSpeed){
+		for(double i = speed; i >= 0; i -= .1){
+			for(double j = speed; j >= 0; j -= .1){
+				if(j/i < ratio + .2 && j/i > ratio - .2 && Math.sqrt((j*j)+(i*i)) <= speed){
 					this.setyVel(i);
 					this.setxVel(j);
 					return j/i;
@@ -81,8 +83,14 @@ public class Cell {
 
 	}
 
+	
+	//Setters and getters
 	public double getxCoord() {
 		return xCoord;
+	}
+	
+	public double getMomentum(){
+		return this.getMass() * Math.sqrt(this.getxVel()*this.getxVel()+this.getyVel()*this.getyVel());
 	}
 
 	public void setxCoord(double xCord) {
