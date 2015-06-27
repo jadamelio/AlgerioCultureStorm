@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Cell {
 
-	
+
 	//Properties
 	private double xCoord;
 	private double yCoord;
@@ -13,7 +13,7 @@ public class Cell {
 	private double mass;
 	private double maxSpeed;
 
-	
+
 
 	// Constructors
 	public Cell() {
@@ -34,7 +34,7 @@ public class Cell {
 		xA = xAc;
 		yA = yAc;
 		mass = ma;
-	
+
 	}
 
 	public Cell(double width, double height) {
@@ -73,21 +73,24 @@ public class Cell {
 				}
 			}
 		}
-		
+
 		return -1;
-		
-	}
-
-	public void eat(Cell cell) {
 
 	}
 
-	
+// Picked 10 as the required mass advantage kind of arbitrarily, should be changed later
+	public void eat(Cell otherCell) {
+		if (this.mass > otherCell.getMass() + 10) {
+			this.mass += otherCell.getMass();
+		}
+	}
+
+
 	//Setters and getters
 	public double getxCoord() {
 		return xCoord;
 	}
-	
+
 	public double getMomentum(){
 		return this.getMass() * Math.sqrt(this.getxVel()*this.getxVel()+this.getyVel()*this.getyVel());
 	}
