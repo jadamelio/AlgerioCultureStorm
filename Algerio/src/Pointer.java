@@ -15,12 +15,13 @@ public class Pointer implements MainInterface {
 	private ArrayList<Cell> sense;
 	private ArrayList<Cell> subCells;
 	private double maxSpeed;
+	private int ID;
 
 	// Constructors
 	public Pointer(double xCoord, double yCoord, double xVel, double yVel,
 			double xA, double yA, double mass, boolean div, String type,
 			ArrayList<Cell> sense, ArrayList<Cell> subCells) {
-		super();
+
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
 		this.xVel = xVel;
@@ -39,6 +40,14 @@ public class Pointer implements MainInterface {
 	public void main() {
 		update();
 
+	}
+
+	@Override
+	public String toString() {
+
+		return "ID: "+ ID + " X: " + xCoord + " Y:" + yCoord + " V: "
+				+ Math.sqrt(xVel * xVel + yVel * yVel) + " Degree: "
+				+ Math.atan(yVel / xVel);
 	}
 
 	public void update() {
@@ -245,6 +254,22 @@ public class Pointer implements MainInterface {
 
 	public void setSubCells(ArrayList<Cell> subCells) {
 		this.subCells = subCells;
+	}
+
+	public double getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public void setMaxSpeed(double maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 }

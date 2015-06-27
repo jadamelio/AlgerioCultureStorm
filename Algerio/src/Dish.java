@@ -5,12 +5,13 @@ public class Dish {
 	public static void main(String[] args) {
 		int width = 2000;
 		int height = 200;
-
+		ArrayList<Cell> cells = new ArrayList<Cell>();
+		cells.add(new Cell());
 		ArrayList<Pointer> pointers = new ArrayList<Pointer>();
 		// pointer.add(new jackCellv1());
 		// pointer.get(0).setxVel(1);
 		// pointer.get(0).setType("Cell");
-
+		pointers.add(new Pointer(1, 1, 1, 1, 1, 1, 1, false, "cell", cells, cells));
 		while (true) {
 			Agar(pointers, width, height);
 		}
@@ -20,16 +21,20 @@ public class Dish {
 		for (int i = 0; i < pointer.size(); i++) {
 			// trace("Loop");
 
-			if (pointer.get(i).getType().equals("Cell")) {
-				pointer.get(i).main();
+		//	if (pointer.get(i).getType().equals("Cell")) {
+			//	pointer.get(i).main();
 				// trace(pointer.get(i).isDiv());
-			}
+		//	}
+			pointer.get(i).update();
 			for (Cell cell : pointer.get(i).getSubCells()) {
+				cell.update();
 				wallDetect(cell, width, height);
-
+				
+				trace(cell.toString());
+				
 			}
 			pointer = hitDetect(pointer);
-
+			trace(pointer.get(i).toString());
 		}
 
 	}
@@ -44,8 +49,8 @@ public class Dish {
 						for (Cell cellJ : pointer.get(j).getSubCells()) {
 							double xDis = cellI.getxCoord() - cellJ.getxCoord();
 							double yDis = cellI.getyCoord() - cellJ.getyCoord();
-							double distance = Math.abs(Math.sqrt(xDis * xDis + yDis
-									* yDis));
+							double distance = Math.abs(Math.sqrt(xDis * xDis
+									+ yDis * yDis));
 							if (distance < cellI.getMass() / 2
 									+ cellJ.getMass() / 2) {
 								eat(cellI, cellJ, pointer.get(i),
