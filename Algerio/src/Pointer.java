@@ -2,8 +2,7 @@ import java.util.ArrayList;
 
 public class Pointer implements MainInterface {
 
-	
-	//Properties
+	// Properties
 	private double xCoord;
 	private double yCoord;
 	private double xVel;
@@ -16,7 +15,8 @@ public class Pointer implements MainInterface {
 	private ArrayList<Cell> sense;
 	private ArrayList<Cell> subCells;
 	private double maxSpeed;
-//Constructors
+
+	// Constructors
 	public Pointer(double xCoord, double yCoord, double xVel, double yVel,
 			double xA, double yA, double mass, boolean div, String type,
 			ArrayList<Cell> sense, ArrayList<Cell> subCells) {
@@ -34,8 +34,7 @@ public class Pointer implements MainInterface {
 		this.subCells = subCells;
 	}
 
-	
-	//Main method, governs actual change of position.
+	// Main method, governs actual change of position.
 	@Override
 	public void main() {
 		update();
@@ -43,7 +42,7 @@ public class Pointer implements MainInterface {
 	}
 
 	public void update() {
-		
+
 		for (Cell cell : subCells) {
 			cell.setxVel(xVel);
 			cell.setyVel(yVel);
@@ -57,7 +56,8 @@ public class Pointer implements MainInterface {
 		yVel += yA;
 		this.move(xCoord + xVel, yCoord + yVel);
 	}
-//Divides every eligible cell in the pointer
+
+	// Divides every eligible cell in the pointer
 	public void divide() {
 		ArrayList<Cell> temp = new ArrayList<Cell>();
 		for (Cell cell : subCells) {
@@ -76,7 +76,7 @@ public class Pointer implements MainInterface {
 
 	public void internalContinuity() {
 		// Make sure the cells bounce of each other and don't each other
-		//This doesn't work, like at all
+		// This doesn't work, like at all
 		for (int i = 0; i < subCells.size(); i++) {
 			for (int j = i + 1; j < subCells.size(); j++) {
 				if (collisionDetect(subCells.get(i), subCells.get(j))) {
@@ -85,7 +85,8 @@ public class Pointer implements MainInterface {
 			}
 		}
 	}
-//Checks to see if two cells are bumping with circle detection
+
+	// Checks to see if two cells are bumping with circle detection
 	public boolean collisionDetect(Cell a, Cell b) {
 		double xDis = a.getxCoord() - b.getxCoord();
 		double yDis = a.getyCoord() - b.getyCoord();
@@ -98,18 +99,21 @@ public class Pointer implements MainInterface {
 		}
 
 	}
-//IDK, i'll figure it out
+
+	// IDK, i'll figure it out
 	public void collide(Cell a, Cell b) {
 		double momentum = a.getMomentum() + b.getMomentum();
 		// uuuh
 	}
-//Removes a cell from the array, returning its mass as a double
+
+	// Removes a cell from the array, returning its mass as a double
 	public double removeCell(Cell cell) {
 		mass = cell.getMass();
 		subCells.remove(cell);
 		return mass;
 	}
-//Sets pointers x and y vectors to a coordinate point
+
+	// Sets pointers x and y vectors to a coordinate point
 	public double move(double x, double y) {
 		double xVec = this.xCoord - x;
 		double yVec = this.yCoord - y;
@@ -154,8 +158,7 @@ public class Pointer implements MainInterface {
 		cell.setyCoord(value);
 	}
 
-	
-	//Setters and getter
+	// Setters and getter
 	public double getxCoord() {
 		return xCoord;
 	}

@@ -78,12 +78,6 @@ public class Cell {
 
 	}
 
-// Picked 10 as the required mass advantage kind of arbitrarily, should be changed later
-	public void eat(Cell otherCell) {
-		if (this.mass > otherCell.getMass() + 10) {
-			this.mass += otherCell.getMass();
-		}
-	}
 
 
 	//Setters and getters
